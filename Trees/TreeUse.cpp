@@ -1,6 +1,23 @@
 #include<bits/stdc++.h>
+#include<queue>
+
 #include "TreeNode.h"
 using namespace std;
+
+TreeNode<int>* takeInputLevelWise(){
+    int rootData;
+    cout<<"Enter root data"<<endl;
+    cin>>rootData;
+    TreeNode<int>* root = new TreeNode<int>(rootData);
+
+    queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    while(pendingNodes.size() != 0){
+        
+    }
+
+}
+
 
 // Where is the base case? It doesn't have a base case because of the same reason as of printTree.
 TreeNode<int>* takeInput(){
