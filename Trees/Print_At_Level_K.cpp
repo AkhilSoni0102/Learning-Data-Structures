@@ -14,22 +14,22 @@ class TreeNode{
 
 TreeNode<int>* takeInputLevelWise(){
     int rootData;
-    cout<<"Enter Root Data"<<endl;
+    cout<<"Enter rootData: "<<endl;
     cin>>rootData;
-    TreeNode<int> *root = new TreeNode<int>(rootData);
+    TreeNode<int>* root = new TreeNode<int>(rootData);
     queue<TreeNode<int>*> pendingNodes;
     pendingNodes.push(root);
     while(pendingNodes.size() != 0){
-        TreeNode<int> *front = pendingNodes.front();
+        TreeNode<int>* front = pendingNodes.front();
         pendingNodes.pop();
-        cout<<"Enter Number of Childrens of "<<front->Data<<endl;
         int numChild;
+        cout<<"Enter the Number of Children of: "<<front->Data<<endl;
         cin>>numChild;
-        for(int i =0;i<numChild;i++){
+        for(int i = 0;i < numChild;i++){
             int childData;
-            cout<<"Enter "<<i<<"th Child of "<<front->Data<<endl;
+            cout<<"Enter "<<i<<"th child of: "<<front->Data<<endl;
             cin>>childData;
-            TreeNode<int> *child = new TreeNode<int>(childData);
+            TreeNode<int>* child = new TreeNode<int>(childData);
             front->children.push_back(child);
             pendingNodes.push(child);
         }
@@ -37,18 +37,21 @@ TreeNode<int>* takeInputLevelWise(){
     return root;
 }
 
-
-int Find_Height(TreeNode<int> *root){
+void Print_At_Level_K(TreeNode<int>* root, int k){
     if(root == NULL)
-        return 0;
-    int Height = 0;
-    for(int i = 0;i < root->children.size();i++){
-        Height = max(Height, Find_Height(root->children[i]));
+        return;
+    if(k == 0){
+        cout<<root->Data<<" ";
+        return;
     }
-    return Height + 1;
+    for(int i = 0;i < root->children.size();i++){
+        Print_At_Level_K(root->children[i],k-1);
+    }
 }
 
 int main(){
-    TreeNode<int> *root = takeInputLevelWise();
-    cout<<Find_Height(root);
+    TreeNode<int>* root = takeInputLevelWise();
+    int k;
+    k = 2;
+    Print_At_Level_K(root,k);
 }
