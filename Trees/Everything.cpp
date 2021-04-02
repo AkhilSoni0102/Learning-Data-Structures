@@ -1,6 +1,185 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+template<typename T> 
+class TreeNode{
+    public: 
+    T Data;
+    vector<TreeNode<T> *> children;
+
+
+    TreeNode(T Data){
+        this -> Data = Data;
+    }
+
+    ~TreeNode(){
+        for(int i = 0;i < children.size();i++)
+            delete children[i];
+    }
+};
+
+TreeNode<int>* takeInputLevelWise(){
+    int rootData;
+    cout<<"Enter rootData: "<<endl;
+    cin>> rootData;
+    TreeNode<int>* root = new TreeNode<int>(rootData);
+    queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    while(pendingNodes.size()!=0){
+        TreeNode<int>* front = pendingNodes.front();
+        pendingNodes.pop();
+        int numChild;
+        cout<<"Enter the Number of Children of: "<<front->Data<<endl;
+        cin>>numChild;
+        for(int i = 0;i < numChild; i++){
+            int childData;
+            cout<<"Enter "<<i<<"th child of "<< front->Data<<endl;
+            cin>>childData;
+            TreeNode<int>* child = new TreeNode<int>(childData);
+            front->children.push_back(child);
+            pendingNodes.push(child);
+        }
+    }
+    return root;
+}
+
+void PrintTreeLevelWise(TreeNode<int>* root){
+    if(root == NULL)
+        return;
+    queue<TreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    while(pendingNodes.size()!=0){
+        TreeNode<int>* front = pendingNodes.front();
+        pendingNodes.pop();
+        cout<<front->Data<<": ";
+        for(int i = 0;i < front->children.size();i++){
+            cout<<front->children[i]->Data<<" ";
+            pendingNodes.push(front->children[i]);
+        }
+        cout<<endl;
+    }
+}
+
+int CountLeafNode(TreeNode<int>* root){
+    if(root == NULL)
+        return 0;
+    if(root->children.size() == 0)
+        return 1;
+    int c = 0;
+    for(int i = 0;i < root->children.size();i++){
+        c += CountLeafNode(root->children[i]);
+    }
+    return c;
+}
+
+int CountNodes(TreeNode<int>* root){
+    if(root == NULL)
+        return 0;
+    int c = 1;
+    for(int i = 0;i < root->children.size();i++){
+        c += CountNodes(root->children[i]);
+    }
+    return c;
+}
+
+int FindHeight(TreeNode<int>* root){
+    if(root == NULL)
+        return 0;
+    int Height = 0;
+    for(int i = 0;i < root->children.size();i++){
+        Height = max(Height, FindHeight(root->children[i]));
+    }
+    return Height + 1;
+}
+
+int Max_Data_Node(TreeNode<int>* root){
+    if(root == NULL)
+        return 0;
+    int Max = root->Data;
+    for(int i = 0;i < root->children.size();i++){
+        Max = max(Max,Max_Data_Node(root->children[i]));
+    }
+    return Max;
+}
+
+void PrintAtLevelK(TreeNode<int>* root,int k){
+    if(k == 0){
+        cout<<root->Data<<" ";
+        return;
+    }
+    for(int i = 0;i < root->children.size();i++){
+        PrintAtLevelK(root->children[i],k-1);
+    }
+}
+
+void PrintTree(TreeNode<int>* root){
+    if(root == NULL)
+        return;
+    cout<<root->Data<<endl;
+    for(int i = 0; i < root->children.size();i++)
+        PrintTree(root->children[i]);
+}
+
+int SumofNodes(TreeNode<int> *root){
+    if(root == NULL)
+        return 0;
+    int sum = 0;
+    for(int i = 0;i < root->children.size();i++){  
+        sum += SumofNodes(root->children[i]);
+    }
+    return sum + root->Data;
+}
+
+void DeleteTree_postOrder(TreeNode<int>* root){
+    if(root == NULL)
+        return ;
+    for(int i = 0;i < root->children.size();i++)
+        delete root->children[i];
+    delete root;
+}
+
+void PostOrder(TreeNode<int>* root){
+    if(root == NULL)
+        return;
+    for(int i = 0;i < root->children.size();i++){
+        PostOrder(root->children[i]);
+    }
+    cout<<root->Data<<endl;
+}
+
+void PreOrder(TreeNode<int>* root){
+    if(root == NULL)
+        return;
+    cout<<root->Data;
+    for(int i = 0;i < root->children.size();i++){
+        PreOrder(root->children[i]);
+    }
+}
+
+int main()
+{
+    TreeNode<int>* root = takeInputLevelWise();
+    PrintTreeLevelWise(root);
+    cout<<endl;
+    PrintTree(root);
+    cout<<endl;
+    cout<<"The Height of the Tree: "<<FindHeight(root)<<endl;
+    cout<<"THe count of Leaf Nodes: "<<CountLeafNode(root)<<endl;
+    cout<<"Sum_ofNodes: "<<SumofNodes(root)<<endl;
+    cout<<"Max_data Node: "<<Max_Data_Node(root)<<endl;
+    cout<<"count Nodes: "<<CountNodes(root)<<endl;
+    PostOrder(root);
+    cout<<endl;
+    PreOrder(root);
+    cout<<endl;
+    delete root;
+}
+
+// 1 3 2 3 4 2 5 6 1 7 1 8 0 0 0 0 
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
 template<typename T>
 class TreeNode{
     public: 
