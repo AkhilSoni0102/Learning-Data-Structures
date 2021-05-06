@@ -15,14 +15,14 @@ class BinaryTreeNode{
     }
 
     ~BinaryTreeNode(){
-        delete left;
         delete right;
+        delete left;
     }
 };
 
 BinaryTreeNode<int>* takeInputLevelWise(){
     int rootData;
-    cout<<"Enter the rootData: "<<endl;
+    cout<<"Enter rootData: "<<endl;
     cin>>rootData;
     if(rootData == -1)
         return NULL;
@@ -33,14 +33,14 @@ BinaryTreeNode<int>* takeInputLevelWise(){
         BinaryTreeNode<int>* front = pendingNodes.front();
         pendingNodes.pop();
         int childData;
-        cout<<"Enter the left child of: "<<front->Data<<endl;
+        cout<<"Enter the left Child of: "<<front->Data<<endl;
         cin>>childData;
         if(childData != -1){
             BinaryTreeNode<int>* leftChild = new BinaryTreeNode<int>(childData);
             pendingNodes.push(leftChild);
             front->left = leftChild;
         }
-        cout<<"Enter the right child of: "<<front->Data<<endl;
+        cout<<"Enter the right Child of: "<<front->Data<<endl;
         cin>>childData;
         if(childData != -1){
             BinaryTreeNode<int>* rightChild = new BinaryTreeNode<int>(childData);
@@ -51,19 +51,29 @@ BinaryTreeNode<int>* takeInputLevelWise(){
     return root;
 }
 
-BinaryTreeNode<int>* SearchBST(BinaryTreeNode<int>* root, int K){
+int Max(BinaryTreeNode<int>* root){
     if(root == NULL)
-        return NULL;
-    if(root -> Data == K)
-        return root;
-    else if(root -> Data > K)
-        return SearchBST(root->left, K);
+        return INT_MIN;
+    return max(root->Data, max(Max(root->left), Max(root->right)));
+}
+
+int Min(BinaryTreeNode<int>* root){
+    if(root == NULL)
+        return INT_MAX;
+    return min(root->Data, min(Min(root->left), Min(root->right)));
+}
+
+int IsBST(BinaryTreeNode<int>* root){
+    if(root == NULL)
+        return 1;
+    if(root->Data > Max(root->left) && root->Data <= Min(root->right))
+        return IsBST(root->left) && IsBST(root->right);
     else 
-        return SearchBST(root->right, K);
+        return 0;
 }
 
 int main(){
     BinaryTreeNode<int>* root = takeInputLevelWise();
-    BinaryTreeNode<int>* search = SearchBST(root, 5);
-    cout<<endl<<search->Data;
+    cout<<IsBST(root);
 }
+

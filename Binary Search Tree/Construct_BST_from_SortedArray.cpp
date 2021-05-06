@@ -19,7 +19,6 @@ class BinaryTreeNode{
         delete left;
     }
 };
-
 BinaryTreeNode<int>* takeInputLevelWise(){
     int rootData;
     cout<<"Enter rootData: "<<endl;
@@ -50,22 +49,41 @@ BinaryTreeNode<int>* takeInputLevelWise(){
     }
     return root;
 }
-
-void Print_Elements_in_Range(BinaryTreeNode<int>* root, int Min, int Max){
+void printLevelWise(BinaryTreeNode<int>* root){
     if(root == NULL)
-        return;
-    if(root -> Data >= Min && root->Data <= Max){
-        cout<<root->Data<<" ";
-        Print_Elements_in_Range(root->left, Min, Max);
-        Print_Elements_in_Range(root->right, Min, Max);
+        return ;
+    queue<BinaryTreeNode<int>*> pendingNodes;
+    pendingNodes.push(root);
+    while(pendingNodes.size() != 0){
+        BinaryTreeNode<int>* front = pendingNodes.front();
+        pendingNodes.pop();
+        cout<<front->Data<<": ";
+        if(front->left != NULL){
+            cout<<"L: "<<front->left->Data<<" ";
+            pendingNodes.push(front->left);
+        }
+        if(front->right != NULL){
+            cout<<"R: "<<front->right->Data<<" ";
+            pendingNodes.push(front->right);
+        }
+        cout<<endl;
     }
-    else if(root->Data < Min)
-        Print_Elements_in_Range(root->right, Min, Max);
-    else if(root->Data > Max)
-        Print_Elements_in_Range(root->left, Min, Max);
+}
+
+BinaryTreeNode<int>* Construct_BST_from_SortedArray(vector<int> &a, int Start, int End){
+     if(Start > End)
+        return NULL;
+    int Mid = Start + ( End - Start )/2;
+    BinaryTreeNode<int>* root = new BinaryTreeNode<int>(a[Mid]);
+    root->left = Construct_BST_from_SortedArray(a,Start,Mid-1);
+    root->right = Construct_BST_from_SortedArray(a,Mid+1,End);
+    return root;
 }
 
 int main(){
-    BinaryTreeNode<int>* root = takeInputLevelWise();
-    Print_Elements_in_Range(root, 2, 5);
+    vector<int> a;
+    for(int i = 1;i <= 10;i++)
+        a.push_back(i);
+    BinaryTreeNode<int>* root = Construct_BST_from_SortedArray(a, 0, 9);
+    printLevelWise(root);
 }
