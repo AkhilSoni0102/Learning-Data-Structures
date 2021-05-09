@@ -20,7 +20,6 @@ class BinaryTreeNode{
         delete left;
     }
 };
-
 BinaryTreeNode<int>* takeInputLevelWise(){
     int rootData;
     cout<<"Enter rootData: "<<endl;

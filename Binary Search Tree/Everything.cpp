@@ -268,7 +268,6 @@ class BST{
 };
 
 int main(){
-    BST<int>* root = takeInputLevelWise();
 
     /*BinaryTreeNode<int>* root = takeInputLevelWise();
 

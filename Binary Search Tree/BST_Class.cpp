@@ -95,7 +95,7 @@ class BST{
                 BST<int>* temp = this;
                 this = temp->left;
                 temp->left = NULL;
-                delete temp;
+                delete temp;    
             }
             else{
                 BST<int>* Smallest = right;
