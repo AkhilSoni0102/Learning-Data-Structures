@@ -9,83 +9,6 @@ class MapNode{
     MapNode* next;
 
     MapNode(string key, V value){
-        this -> value = value;
-        this -> key = key;
-        next = NULL;
-    }
-
-    ~MapNode(){
-        delete next;
-    }
-};
-
-template<typename V>
-class ourmap{
-    MapNode<V>** buckets;
-    int count;
-    int numbuckets;
-
-    ourmap(){
-        count = 0;
-        numbuckets = 5;
-        buckets = new MapNode<V>*[numbuckets];
-        for(int i = 0;i < numbuckets;i++)
-            buckets[i] = NULL;
-    }
-
-    ~ourmap(){
-        for(int i = 0;i < numbuckets;i++)
-            delete buckets[i];
-        delete [] buckets;
-    }
-
-    int getSize(){
-        return count;
-    }
-
-    int getBucketIndex(string key){
-        int hashCode = 0;
-        int currCoeff = 1;
-        for(int i = key.length()-1;i >= 0;i--){
-            hashCode += key[i] * currCoeff;
-            hashCode %= numbuckets;
-            currCoeff *= 37;
-            currCoeff %= numbuckets;
-        }
-        return hashCode % numbuckets;
-    }
-    
-    void insert(string key, V value){
-        int bucketIndex = getBucketIndex(string);
-        MapNode<V>* head = buckets[bucketIndex];
-        while(head != NULL){
-            if(head -> key == key){
-                head -> value = value;
-                return ;
-            }
-            head = head -> next;
-        }
-        MapNode<V>* node = new MapNode<V>(key, value);
-        buckets[bucketIndex] = node;
-    }
-
-};
-
-
-
-
-
-/*#include<bits/stdc++.h>
-using namespace std;
-
-template<typename V>
-class MapNode{
-    public:
-    string key;
-    V value;
-    MapNode* next;
-
-    MapNode(string key, V value){
         this -> key = key;
         this -> value = value;
         next = NULL;
@@ -319,4 +242,4 @@ int main(){
     while(!p.isEmpty())
         cout<<p.removeMin()<<" ";
 
-}*/
+}
