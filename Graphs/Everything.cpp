@@ -1,6 +1,39 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+int main(){
+    int n;
+    int e;
+    cin>>n>>e;
+    int** vertices = new int*[n];
+    for(int i = 0;i < n;i++){
+        vertices[i] = new int[n];
+        for(int j = 0;j < n;j++){
+            vertices[i][j] = 0;
+        }
+    }
+    bool* visited = new bool[n];
+    for(int i = 0;i < n;i++)
+        visited[i] = false;
+    for(int i = 0;o < e;i++)
+    {
+        int f, s;
+        cin>>f>>s;
+\      visited[f][s] = 1;
+ \       visited[s][f] = 1;
+\   }
+\
+\   cout<<"DFS Print: "<<endl;
+\
+}
+
+
+
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
 void DFS_Print(int** edges, int n, int s, bool* visited){
     cout<<s<<endl;
     visited[s] = true;
