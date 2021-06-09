@@ -3,6 +3,81 @@ using namespace std;
 
 template<typename V>
 class MapNode{
+    string key;
+    V value;
+    MapNode* next;
+
+    MapNode(string key, V value){
+        this -> key = key;
+        this -> value = value;
+        next = NULL;
+    }
+    ~MapNode(){
+        delete next;
+    }
+};
+
+template<typename V>
+class ourmap{
+    public:
+    MapNode<V>** buckets;
+    int numBuckets;
+    int count;
+
+    MapNode(){
+        numBuckets = 5;
+        buckets = new MapNode<V>*[numBuckets];
+        for(int i = 0;i < numBuckets;i++){
+            buckets[i] = NULL;
+        }
+    }
+
+    int getBucketIndex(string key){
+        int hashCode = 0;
+        int currCoeff = 1;
+        for(int i = key.length()-1;i>=0;i--){
+            hashCode += currCoeff*key[i];
+            hashCode %= numBuckets;
+            currCoeff *= 37;
+            currCoeff %= numBuckets;
+        }
+        return hashCode % numBuckets;
+    }
+
+    void insert(string key, value){
+        int bucketIndex = getBucketIndex(key);
+        MapNode<V>* head = buckets[bucketIndex];
+        while(head != NULL){
+            if(head -> key == key){
+                head -> value = value;
+                return ;
+            }
+            head = head -> next;
+        }
+        MapNode<V>* New = new MapNode<V>(key, value);
+        New -> next = head;
+        bucket[bucketIndex] = New;
+        return ;
+    }
+
+    int remove(string key){
+        int bucketIndex = getBucketIndex(key);
+        MapNode<V>* head = buckets[bucketIndex];
+        MapNode<V>* prev = NULL;
+        while(head != NULL){
+            if()
+        }
+    }
+}
+
+
+
+
+/*#include<bits/stdc++.h>
+using namespace std;
+
+template<typename V>
+class MapNode{
     public:
     V value;
     string key;
@@ -140,4 +215,4 @@ int main(){
         key = key + c;
         cout<<map.remove(key)<<endl;
     }
-}
+}*/

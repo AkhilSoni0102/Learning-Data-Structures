@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-void Aggressive(int* A, int n, int c, int start, int End){
+void Aggressive(int* A, int n, int c, int Start, int End){
     if(End >= Start)
         return ;
     int Mid = Start + (Start - End)/2;
