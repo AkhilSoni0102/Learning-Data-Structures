@@ -1,32 +1,32 @@
+// Using Adjacency Matrix: 
 #include<bits/stdc++.h>
 using namespace std;
 
-vector<int>* getPath(int** edges, int n, int s, int e, bool* visited){
+vector<int>* GetPathBFS(int** edges, int n, int s, int e, bool* visited){
     queue<int> pendingNodes;
     pendingNodes.push(s);
-    visited[s] = true;
-    unordered_map<int, int> umap;
-    umap[s] = -1;
-    while(!pendingNodes.empty()){
+    unordered_map<int, int> parent;
+    parent[s] = -1;
+    while(pendingNodes.size() != 0){
         int front = pendingNodes.front();
         pendingNodes.pop();
+        visited[front] = true;
         for(int i = 0;i < n;i++){
-            if(front == i) 
+            if(front == i)
                 continue;
             if(edges[front][i] && !visited[i]){
-                umap[i] = front;
+                parent[i] = front;
+                visited[i] = true;
+                pendingNodes.push(i);
                 if(i == e){
                     vector<int>* v = new vector<int>();
                     int t = i;
-                    while(t != s){
-                        v->push_back(t);
-                        t = umap[t];
+                    while(t != -1){
+                        v -> push_back(t);
+                        t = parent[t];
                     }
-                    v->push_back(s);
                     return v;
                 }
-                pendingNodes.push(i);
-                visited[i] = true;
             }
         }
     }
@@ -38,22 +38,26 @@ int main(){
     int e;
     cin>>n>>e;
     int** edges = new int*[n];
-    for(int i = 0; i < n;i++){
+    for(int i = 0;i < n;i++){
         edges[i] = new int[n];
         for(int j = 0;j < n;j++)
             edges[i][j] = 0;
     }
-    for(int i = 0; i < e;i++){
-        int f, s;
+    for(int i = 0;i < e;i++){
+        int f;
+        int s;
         cin>>f>>s;
         edges[f][s] = 1;
         edges[s][f] = 1;
     }
+    vector<int>* v = new vector<int>();
     bool* visited = new bool[n];
     for(int i = 0;i < n;i++)
         visited[i] = false;
-    vector<int>* v = new vector<int>();
-    v = getPath(edges, n, 0, 6, visited);
-    for(int i = 0; i < v->size();i++)
-        cout<<v->at(i)<<" ";
+    v = GetPathBFS(edges, n, 0, 6, visited);
+    if(v != NULL)
+        for(int i = 0;i < v -> size();i++)
+            cout << v -> at(i) << " ";
+    else   
+        cout << "No Path Found! "<<endl;
 }
