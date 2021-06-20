@@ -1,6 +1,6 @@
 #include<bits/stdc++.h>
 using namespace std;
-int main(){
+ int main(){
     int n;
     int diff;
     cin>>n>>diff;
@@ -10,22 +10,17 @@ int main(){
     int sum = 0;
     for(int i = 0;i < n;i++)
         sum += A[i];
-    
-    int t[n+1][sum+1];
-    for(int i = 0;i < sum + 1;i++)
+    int S = (sum + diff)/2;
+    int t[n+1][S+1];
+    for(int i = 0;i < S+1;i++)
         t[0][i] = 0;
-    for(int i = 0;i < n+1; i++)
+    for(int i = 0;i < n + 1;i++)
         t[i][0] = 1;
     for(int i = 1;i < n+1;i++)
-        for(int j = 1;j < sum + 1;j++)
+        for(int j = 1;j < S+1;j++)
             if(A[i-1] <= j)
-                t[i][j] = t[i-1][j-A[i-1]] || t[i-1][j];
+                t[i][j] = t[i-1][j - A[i-1]] + t[i-1][j];
             else 
                 t[i][j] = t[i-1][j];
-    int count = 0;
-    for(int i = 0;i <= (sum + 1)/2;i++)
-        if(t[n][i] && abs(sum - 2 * i) == diff)
-            count++;
-    cout << count;
-
-}
+    cout << t[n][S];
+ }

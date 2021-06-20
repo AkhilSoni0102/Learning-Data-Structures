@@ -36,3 +36,11 @@
         both the subsets now should have the sum = Sum/2.
         so if we find one subset whose sum = Sum/2. the other subset will obviously have the sum = Sum/2
         Hence, it is same as Subset sum problem from here.
+
+### Number of subsets with a given diff:
+    Given an array and an intefer Diff. Count the number of subset pairs s1 and s2, whose absolute difference is equal to Diff.
+#### Approach:
+    we are given:     sum(s1) - sum(s2) = Diff --- (1)
+    we can calculate: sum(s1) + sum(s2) = Sum  --- (2)
+    Adding the above two equation we get, sum(s1) = (Diff + Sum) / 2
+    So, the aim became to count the no. of subsets having sum = sum(s1)
