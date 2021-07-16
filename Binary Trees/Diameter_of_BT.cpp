@@ -1,23 +1,19 @@
 #include<bits/stdc++.h>
 using namespace std;
+
 template<typename T>
 class BinaryTreeNode{
     public:
-    int Data;
-    BinaryTreeNode<T>* left;
-    BinaryTreeNode<T>* right;
+        int Data;
+        BinaryTreeNode<T>* left;
+        BinaryTreeNode<T>* right;
 
-    BinaryTreeNode(int Data){
-        this -> Data = Data;
-        left = NULL;
-        right = NULL;
-    }
-    ~BinaryTreeNode(){
-        delete left;
-        delete right;
-        delete this;
-    }
-}; 
+        BinaryTreeNode(int Data){
+            this -> Data = Data;
+            left = NULL;
+            right = NULL;
+        }
+};
 BinaryTreeNode<int>* takeInputLevelWise(){
     int rootData;
     cout << "Enter rootData: " << endl;
@@ -70,38 +66,24 @@ void PrintLevelWise(BinaryTreeNode<int>* root){
         cout << endl;
     }
 }
-class Pair{
-    public:
-        int Min;
-        int Max;
-        int Height;
-};
-Pair Min_Max_Height(BinaryTreeNode<int>* root){
-    if(root == NULL){
-        Pair p;
-        p.Min = INT_MAX;
-        p.Max = INT_MIN;
-        p.Height = 0;
-        return p;
-    }
-    Pair L = Min_Max_Height(root -> left);
-    Pair R = Min_Max_Height(root -> right);
-    int LMin = L.Min;
-    int RMin = R.Min;
-    int LH = L.Height;
-    int RH = R.Height;
-    int LMax = L.Max;
-    int RMax = R.Max;
-    Pair p;
-    p.Min = min(root -> Data, min(LMin, RMin));
-    p.Max = max(root -> Data, max(RMax, LMax));
-    p.Height = 1 + max(LH, RH);
-    return p;
+
+int Height(BinaryTreeNode<int>* root){
+    if(root == NULL)
+        return 0;
+    return 1 + max(Height(root -> left), Height(root -> right));
 }
+int Diameter_of_a_BinaryTree(BinaryTreeNode<int>* root){
+    if(root == NULL){
+        return 0;
+    }
+    int LH = Height(root -> left);
+    int RH = Height(root -> right);
+    int LD = Diameter_of_a_BinaryTree(root -> left);
+    int RD = Diameter_of_a_BinaryTree(root -> right);
+    return max(LH + RH, max(LD, RD));
+}
+
 int main(){
     BinaryTreeNode<int>* root = takeInputLevelWise();
-    Pair P = Min_Max_Height(root);
-    cout << "Min: " << P.Min << endl;
-    cout << "Max: " << P.Max << endl;
-    cout << "Height: " << P.Height;
+    cout << Diameter_of_a_BinaryTree(root);
 }

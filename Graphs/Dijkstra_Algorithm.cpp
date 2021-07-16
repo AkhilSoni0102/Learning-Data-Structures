@@ -50,6 +50,9 @@ int main(){
         edges[f][s] = w;
         edges[s][f] = w;
     }
+    
+
+
 
     Dijkstra(edges, n, 0);
 }

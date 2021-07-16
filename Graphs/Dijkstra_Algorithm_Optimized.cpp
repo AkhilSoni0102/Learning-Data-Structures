@@ -105,7 +105,10 @@ int main(){
     }
     cout<<"Dijkstra's Algorithm: "<< endl;
     for(int i = 1;i < n;i++){
-            cout << 0 << " " << i << " " << dist[i] << endl;
+        if(parents[i] < i)
+            cout << parents[i] << " " << i << " " << dist[i] << endl;
+        else 
+            cout << i << " " << parents[i] << " " << dist[i] << endl;
     }
     
 

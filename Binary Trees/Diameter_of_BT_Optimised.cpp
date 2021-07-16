@@ -70,38 +70,30 @@ void PrintLevelWise(BinaryTreeNode<int>* root){
         cout << endl;
     }
 }
-class Pair{
-    public:
-        int Min;
-        int Max;
-        int Height;
-};
-Pair Min_Max_Height(BinaryTreeNode<int>* root){
+
+pair<int, int> Diameter(BinaryTreeNode<int>* root){
     if(root == NULL){
-        Pair p;
-        p.Min = INT_MAX;
-        p.Max = INT_MIN;
-        p.Height = 0;
+        pair<int, int> p;
+        p.first = 0;
+        p.second = 0;
         return p;
     }
-    Pair L = Min_Max_Height(root -> left);
-    Pair R = Min_Max_Height(root -> right);
-    int LMin = L.Min;
-    int RMin = R.Min;
-    int LH = L.Height;
-    int RH = R.Height;
-    int LMax = L.Max;
-    int RMax = R.Max;
-    Pair p;
-    p.Min = min(root -> Data, min(LMin, RMin));
-    p.Max = max(root -> Data, max(RMax, LMax));
-    p.Height = 1 + max(LH, RH);
+    pair<int, int> L = Diameter(root -> left);
+    pair<int, int> R = Diameter(root -> right);
+    int LH = L.first;
+    int RH = R.first;
+    int LD = L.second;
+    int RD = R.second;
+    int Height = max(LH, RH) + 1;
+    int Dia = max(LH + RH, max(RD, LD));
+    pair<int, int> p;
+    p.first = Height;
+    p.second = Dia;
     return p;
 }
+
 int main(){
     BinaryTreeNode<int>* root = takeInputLevelWise();
-    Pair P = Min_Max_Height(root);
-    cout << "Min: " << P.Min << endl;
-    cout << "Max: " << P.Max << endl;
-    cout << "Height: " << P.Height;
+    pair<int, int> Dia = Diameter(root);
+    cout << Dia.first << " " << Dia.second;
 }

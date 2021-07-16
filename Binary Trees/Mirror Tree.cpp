@@ -70,38 +70,14 @@ void PrintLevelWise(BinaryTreeNode<int>* root){
         cout << endl;
     }
 }
-class Pair{
-    public:
-        int Min;
-        int Max;
-        int Height;
-};
-Pair Min_Max_Height(BinaryTreeNode<int>* root){
-    if(root == NULL){
-        Pair p;
-        p.Min = INT_MAX;
-        p.Max = INT_MIN;
-        p.Height = 0;
-        return p;
-    }
-    Pair L = Min_Max_Height(root -> left);
-    Pair R = Min_Max_Height(root -> right);
-    int LMin = L.Min;
-    int RMin = R.Min;
-    int LH = L.Height;
-    int RH = R.Height;
-    int LMax = L.Max;
-    int RMax = R.Max;
-    Pair p;
-    p.Min = min(root -> Data, min(LMin, RMin));
-    p.Max = max(root -> Data, max(RMax, LMax));
-    p.Height = 1 + max(LH, RH);
-    return p;
-}
-int main(){
-    BinaryTreeNode<int>* root = takeInputLevelWise();
-    Pair P = Min_Max_Height(root);
-    cout << "Min: " << P.Min << endl;
-    cout << "Max: " << P.Max << endl;
-    cout << "Height: " << P.Height;
+
+void MirrorBinaryTree(BinaryTreeNode<int>* root){
+    if(root == NULL)
+        return ;
+    BinaryTreeNode<int>* Temp;
+    Temp = root -> left;
+    root -> left = root -> right;
+    root -> right = Temp;
+    MirrorBinaryTree(root -> left); 
+    MirrorBinaryTree(root -> right);
 }
