@@ -70,9 +70,6 @@ class ourmap{
     }
 }
 
-
-
-
 /*#include<bits/stdc++.h>
 using namespace std;
 
