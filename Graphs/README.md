@@ -9,11 +9,11 @@ We are given a graph, our aim is to find the minimum spanning tree(MST).
         v2 - second vertex 
         w - weight of the edges connecting v1 and v2
 
-Our aim is to find a tree having all the vertices with edges of minimum weights. 
-So, we do the following:
-    1. Sort the array on the basis of weights.
-    2. Take each edge one by one and check whether adding that edge to the tree makes a cycle. 
-    3. How do we check whether it makes a cycle? - Union Find Algorithm.
+    Our aim is to find a tree having all the vertices with edges of minimum weights. 
+    So, we do the following:
+        1. Sort the array on the basis of weights.
+        2. Take each edge one by one and check whether adding that edge to the tree makes a cycle. 
+        3. How do we check whether it makes a cycle? - Union Find Algorithm.
 
 ## Union Find Algorithm:
 It is an algorithm to find whether there is a cycle in a graph.
